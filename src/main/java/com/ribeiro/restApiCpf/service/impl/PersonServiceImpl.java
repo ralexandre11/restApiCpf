@@ -2,6 +2,7 @@ package com.ribeiro.restApiCpf.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ribeiro.restApiCpf.exception.MyRuleException;
 import com.ribeiro.restApiCpf.model.entity.Person;
@@ -20,9 +21,10 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
+	@Transactional
 	public Person savePerson(Person person) {
-		// TODO Auto-generated method stub
-		return null;
+		checkCpf(person.getCpf());
+		return repository.save(person);
 	}
 
 	@Override
