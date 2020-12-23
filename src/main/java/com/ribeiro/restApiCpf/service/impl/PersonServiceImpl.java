@@ -20,9 +20,7 @@ public class PersonServiceImpl implements PersonService {
 	
 	private PersonRepository repository;
 	
-//	@Autowired
 	public PersonServiceImpl(PersonRepository repository) {
-//		super();
 		this.repository = repository;
 	}
 
