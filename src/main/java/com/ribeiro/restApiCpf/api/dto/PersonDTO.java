@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PersonDTO {
 
+	private Integer id;
 	private String name;
 	private String Cpf;
 }

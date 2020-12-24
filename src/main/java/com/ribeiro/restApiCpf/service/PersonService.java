@@ -3,11 +3,12 @@ package com.ribeiro.restApiCpf.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.ribeiro.restApiCpf.api.dto.PersonDTO;
 import com.ribeiro.restApiCpf.model.entity.Person;
 
 public interface PersonService {
 	
-	Person savePerson(Person person);
+	PersonDTO save(PersonDTO person);
 	
 	Person updatePerson(Person person);
 	

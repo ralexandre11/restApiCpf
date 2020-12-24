@@ -44,13 +44,8 @@ public class PersonResource {
 
 	@PostMapping
 	public ResponseEntity save( @RequestBody PersonDTO dto ) {
-		try {
-			Person person = convert(dto);
-			Person personSaved = service.savePerson(person);
-			return new ResponseEntity(personSaved, HttpStatus.CREATED);
-		} catch (MyRuleException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+		PersonDTO personSaved = service.save(dto);
+		return new ResponseEntity(personSaved, HttpStatus.CREATED);
 	}
 
 	@PutMapping("{id}")

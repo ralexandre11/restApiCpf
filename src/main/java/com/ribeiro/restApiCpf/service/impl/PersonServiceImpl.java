@@ -7,9 +7,12 @@ import java.util.Optional;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.ribeiro.restApiCpf.api.dto.PersonDTO;
 import com.ribeiro.restApiCpf.exception.MyRuleException;
 import com.ribeiro.restApiCpf.model.entity.Person;
 import com.ribeiro.restApiCpf.model.repository.PersonRepository;
@@ -26,10 +29,12 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	@Transactional
-	public Person savePerson(Person person) {
+	public PersonDTO save(PersonDTO dto) {
+		Person person = convert(dto);
 		validateFields(person);
 		checkCpf(person.getCpf());
-		return repository.save(person);
+		Person personSaved = repository.save(person);
+		return convert(personSaved);
 	}
 
 	@Override
@@ -61,9 +66,8 @@ public class PersonServiceImpl implements PersonService {
 	public void checkCpf(String cpf) {
 		boolean existCpf = repository.existsByCpf(cpf);
 		if (existCpf) {
-			throw new MyRuleException("Já existe uma pessoal cadastrada com este CPF!");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe uma pessoal cadastrada com este CPF!");
 		}
-		
 	}
 	
 	public void validateFields(Person person) {
@@ -71,7 +75,7 @@ public class PersonServiceImpl implements PersonService {
 			throw new MyRuleException("Informe um Nome válido!");
 		}
 		if(person.getCpf() == null || person.getCpf().toString().length() != 11) {
-			throw new MyRuleException("Informe um CPF válido com 11 dígitos!");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Informe um CPF válido com 11 dígitos!");
 		}
 	}
 
@@ -80,5 +84,17 @@ public class PersonServiceImpl implements PersonService {
 	public Optional<Person> getPersonByID(Integer id) {
 		return repository.findById(id);
 	}
+	
+	private Person convert(PersonDTO dto) {
+		Person person = new Person();
+		person.setName(dto.getName());
+		person.setCpf(dto.getCpf());
+		
+		return person;
+	}
+
+	private PersonDTO convert(Person person) {
+		return new PersonDTO(person.getId(), person.getName(), person.getCpf());		
+	}		
 
 }
