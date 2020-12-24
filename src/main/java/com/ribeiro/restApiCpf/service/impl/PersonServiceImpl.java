@@ -49,8 +49,8 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Person> searchPerson(Person personFilter) {
-		Example<Person> example = Example.of(personFilter, 
+	public List<Person> search(Person filter) {
+		Example<Person> example = Example.of(filter, 
 				ExampleMatcher.matching()
 					.withIgnoreCase()
 					.withStringMatcher(StringMatcher.CONTAINING));

@@ -13,7 +13,7 @@ public interface PersonService {
 	
 	void deletePerson(Person person);
 	
-	List<Person> searchPerson(Person personFilter);
+	List<Person> search(Person filter);
 	
 	void checkCpf(String cpf);
 	

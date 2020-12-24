@@ -29,15 +29,13 @@ public class PersonResource {
 	private final PersonService service;
 	
 	@GetMapping
-	public ResponseEntity search(
+	public ResponseEntity<List<Person>> search(
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "cpf", required = false) String cpf
 			) {
 		
-		Person personFilter = new Person();
-		personFilter.setName(name);
-		personFilter.setCpf(cpf);
-		List<Person> personList = service.searchPerson(personFilter);
+		Person personFilter = new Person(name, cpf);
+		List<Person> personList = service.search(personFilter);
 		return ResponseEntity.ok(personList);
 	}
 	

@@ -19,8 +19,14 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class Person {
-	
-	@Id
+
+  public Person(final String name, final String cpf) {
+    super();
+    this.name = name;
+    this.cpf = cpf;
+  }
+
+  @Id
 	@Column(name="id_person")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
