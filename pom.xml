@@ -70,7 +70,7 @@
 				<configuration>
 					<username>projetquebec</username>
 					<password>projetquebec</password>
-					<repository>projetquebec/projetquebec</repository>
+					<repository>projetquebec/rest-api</repository>
 					<tag>${project.version}</tag>
 					<buildArgs>
 						<JAR_FILE>./target/${project.build.finalName}.jar</JAR_FILE>
@@ -96,5 +96,13 @@
 			</plugin>
 		</plugins>
 	</build>
+
+  <repositories>
+    <repository>
+      <id>spring-milestone</id>
+      <name>Spring Milestone Repository</name>
+      <url>https://repo.spring.io/milestone</url>
+    </repository>
+  </repositories>
 
 </project>
