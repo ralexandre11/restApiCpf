@@ -33,8 +33,9 @@ public class PersonServiceImpl implements PersonService {
 	public Person savePerson(Person person) {
 		validateFields(person);
 		checkCpf(person.getCpf());
+		person = repository.save(person);
 		personKafkaService.send(person);
-		return repository.save(person);
+		return person;
 	}
 
 	@Override
