@@ -2,9 +2,11 @@ package com.ribeiro.restApiCpf;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@EnableKafka
 @SpringBootApplication
 //@EnableWebMvc
 public class RestApiCpfApplication implements WebMvcConfigurer {

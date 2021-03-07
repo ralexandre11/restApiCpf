@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
@@ -18,6 +19,9 @@ import com.ribeiro.restApiCpf.service.PersonService;
 @Service
 public class PersonServiceImpl implements PersonService {
 	
+	@Autowired
+	PersonKafkaService personKafkaService;
+	
 	private PersonRepository repository;
 	
 	public PersonServiceImpl(PersonRepository repository) {
@@ -29,6 +33,7 @@ public class PersonServiceImpl implements PersonService {
 	public Person savePerson(Person person) {
 		validateFields(person);
 		checkCpf(person.getCpf());
+		personKafkaService.send(person);
 		return repository.save(person);
 	}
 
